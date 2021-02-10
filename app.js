@@ -14,7 +14,7 @@ const auth = require('./middleware/auth');
 
 const accountRoutes = require('./routes/account');
 const userRoutes = require('./routes/users');
-// import article routes
+const articleRoutes = require('./routes/articles');
 
 const errorHandler = require('./errors/errorHandler');
 const NotFoundError = require('./errors/NotFoundError');
@@ -55,7 +55,7 @@ app.use('/', accountRoutes);
 app.use(auth);
 
 app.use('/', userRoutes);
-// article routes
+app.use('/', articleRoutes);
 
 app.use('*', (req, res, next) => { next(new NotFoundError('Requested resource not found')); });
 
