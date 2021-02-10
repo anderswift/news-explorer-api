@@ -10,9 +10,11 @@ const rateLimit = require('express-rate-limit');
 const { errors } = require('celebrate');
 
 const { requestLogger, errorLogger } = require('./middleware/logger');
-// import auth
+const auth = require('./middleware/auth');
 
-// import routes
+const accountRoutes = require('./routes/account');
+const userRoutes = require('./routes/users');
+// import article routes
 
 const errorHandler = require('./errors/errorHandler');
 const NotFoundError = require('./errors/NotFoundError');
@@ -48,11 +50,12 @@ app.get('/crash-test', () => {
   }, 0);
 });
 
-// account routes
+app.use('/', accountRoutes);
 
-// authorization
+app.use(auth);
 
-// protected routes
+app.use('/', userRoutes);
+// article routes
 
 app.use('*', (req, res, next) => { next(new NotFoundError('Requested resource not found')); });
 
