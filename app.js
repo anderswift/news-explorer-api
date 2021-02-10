@@ -14,7 +14,8 @@ const { requestLogger, errorLogger } = require('./middleware/logger');
 
 // import routes
 
-// import error handling
+const errorHandler = require('./errors/errorHandler');
+const NotFoundError = require('./errors/NotFoundError');
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
@@ -53,11 +54,13 @@ app.get('/crash-test', () => {
 
 // protected routes
 
-// wildcard to catch everything else as 404
+app.use('*', (req, res, next) => { next(new NotFoundError('Requested resource not found')); });
 
 app.use(errorLogger);
 
 // celebrate error handler
 app.use(errors());
+
+app.use(errorHandler);
 
 app.listen(PORT);
