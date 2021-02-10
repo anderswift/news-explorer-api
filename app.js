@@ -9,7 +9,7 @@ const cors = require('cors');
 const rateLimit = require('express-rate-limit');
 const { errors } = require('celebrate');
 
-// import logger
+const { requestLogger, errorLogger } = require('./middleware/logger');
 // import auth
 
 // import routes
@@ -38,6 +38,8 @@ mongoose.connect(DATABASE, {
 app.use(helmet());
 app.use(express.json());
 
+app.use(requestLogger);
+
 // for crash testing, remove after review
 app.get('/crash-test', () => {
   setTimeout(() => {
@@ -52,6 +54,8 @@ app.get('/crash-test', () => {
 // protected routes
 
 // wildcard to catch everything else as 404
+
+app.use(errorLogger);
 
 // celebrate error handler
 app.use(errors());
