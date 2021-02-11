@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-const { PORT = 3000, DATABASE } = process.env;
+const { PORT = 3000, DATABASE = 'mongodb://localhost:27017/newsexplorerdb' } = process.env;
 
 const express = require('express');
 const mongoose = require('mongoose');
