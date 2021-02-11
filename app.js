@@ -1,7 +1,3 @@
-require('dotenv').config();
-
-const { PORT = 3000, DATABASE = 'mongodb://localhost:27017/newsexplorerdb' } = process.env;
-
 const express = require('express');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
@@ -10,7 +6,9 @@ const cors = require('cors');
 const { errors } = require('celebrate');
 
 const { requestLogger, errorLogger } = require('./middleware/logger');
-const { limiter } = require('./middleware/limiter');
+
+const { PORT, DATABASE } = require('./config/environment');
+const { limiter } = require('./config/limiter');
 
 const routes = require('./routes/index');
 

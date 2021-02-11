@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 const auth = require('../middleware/auth');
+const messages = require('../config/messages');
 const NotFoundError = require('../errors/NotFoundError');
 
 const accountRoutes = require('./account');
@@ -16,6 +17,6 @@ router.use(auth);
 router.use('/', userRoutes);
 router.use('/', articleRoutes);
 
-router.use('*', (req, res, next) => { next(new NotFoundError('Requested resource not found')); });
+router.use('*', (req, res, next) => { next(new NotFoundError(messages.NotFound)); });
 
 module.exports = router;

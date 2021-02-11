@@ -1,21 +1,21 @@
 const jwt = require('jsonwebtoken');
-require('dotenv').config();
 
-const { JWT_SECRET = 'secret_salt' } = process.env;
+const { JWT_SECRET } = require('../config/environment');
 const UnauthorizedError = require('../errors/UnauthorizedError');
+const messages = require('../config/messages');
 
 module.exports = (req, res, next) => {
   const { authorization } = req.headers;
 
   if (!authorization || !authorization.startsWith('Bearer ')) {
-    next(new UnauthorizedError('Authorization required'));
+    next(new UnauthorizedError(messages.authRequired));
   } else {
     const token = authorization.replace('Bearer ', '');
     let payload;
     try {
       payload = jwt.verify(token, JWT_SECRET);
     } catch (err) {
-      next(new UnauthorizedError('Authorization required'));
+      next(new UnauthorizedError(messages.authRequired));
     }
     req.user = payload;
 
