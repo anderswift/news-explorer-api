@@ -1,10 +1,9 @@
 const Article = require('../models/article');
-const User = require('../models/user');
 const NotFoundError = require('../errors/NotFoundError');
 const UnauthorizedError = require('../errors/UnauthorizedError');
 
 function getArticles(req, res, next) {
-  return Article.find({}).sort({ date: -1 })
+  return Article.find({ owner: req.user._id }).sort({ date: -1 })
     .then((articles) => {
       res.status(200).send(articles);
     })
@@ -21,22 +20,18 @@ function createArticle(req, res, next) {
     link,
     image,
   } = req.body;
-  return User.findById({ _id: req.user._id })
-    .then((owner) => {
-      Article.create({
-        keyword,
-        title,
-        text,
-        date,
-        source,
-        link,
-        image,
-        owner,
-      })
-        .then((article) => {
-          res.status(201).send(article);
-        })
-        .catch(next);
+  return Article.create({
+    keyword,
+    title,
+    text,
+    date,
+    source,
+    link,
+    image,
+    owner: req.user._id,
+  })
+    .then((article) => {
+      res.status(201).send(article);
     })
     .catch(next);
 }
