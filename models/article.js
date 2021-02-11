@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 
-const RESPONSE_MSG = require('../config/constants');
+const { RESPONSE_MSG } = require('../config/constants');
 
 const articleSchema = new mongoose.Schema({
   keyword: {

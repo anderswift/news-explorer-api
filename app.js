@@ -19,7 +19,7 @@ const app = express();
 app.use(cors());
 app.options('*', cors());
 
-app.use(limiter);
+// app.use(limiter);
 
 mongoose.connect(DATABASE, {
   useNewUrlParser: true,

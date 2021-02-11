@@ -1,4 +1,4 @@
-const RESPONSE_MSG = require('../config/constants');
+const { RESPONSE_MSG } = require('../config/constants');
 
 module.exports = (err, req, res, next) => {
   let { statusCode = 500 } = err;

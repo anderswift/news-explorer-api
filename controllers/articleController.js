@@ -1,5 +1,5 @@
 const Article = require('../models/article');
-const RESPONSE_MSG = require('../config/constants');
+const { RESPONSE_MSG } = require('../config/constants');
 const NotFoundError = require('../errors/NotFoundError');
 const ForbiddenError = require('../errors/ForbiddenError');
 
