@@ -1,9 +1,8 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const { JWT_SECRET } = require('../config/environment');
+const { JWT_SECRET, RESPONSE_MSG } = require('../config/constants');
 const User = require('../models/user');
-const messages = require('../config/messages');
 const NotFoundError = require('../errors/NotFoundError');
 
 function login(req, res, next) {
@@ -19,7 +18,7 @@ function login(req, res, next) {
 function getUserById(req, res, next) {
   return User.findById({ _id: req.params.id })
     .then((user) => {
-      if (user === null) throw new NotFoundError(messages.notFoundUser);
+      if (user === null) throw new NotFoundError(RESPONSE_MSG.notFoundUser);
       else res.status(200).send(user);
     })
     .catch(next);
@@ -47,7 +46,7 @@ function createUser(req, res, next) {
 function getCurrentUser(req, res, next) {
   return User.findById({ _id: req.user._id })
     .then((user) => {
-      if (user === null) throw new NotFoundError(messages.notFoundUser);
+      if (user === null) throw new NotFoundError(RESPONSE_MSG.notFoundUser);
       else {
         res.status(200).send({
           email: user.email,

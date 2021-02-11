@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 
-const messages = require('../config/messages');
+const RESPONSE_MSG = require('../config/constants');
 
 const articleSchema = new mongoose.Schema({
   keyword: {
@@ -29,7 +29,7 @@ const articleSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator: (v) => validator.isURL(v, { protocols: ['http', 'https'] }),
-      message: messages.validUrlArticle,
+      message: RESPONSE_MSG.validUrlArticle,
     },
   },
   image: {
@@ -37,7 +37,7 @@ const articleSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator: (v) => validator.isURL(v, { protocols: ['http', 'https'] }),
-      message: messages.validUrlArticleImg,
+      message: RESPONSE_MSG.validUrlArticleImg,
     },
   },
   owner: {

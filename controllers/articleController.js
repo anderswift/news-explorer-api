@@ -1,5 +1,5 @@
 const Article = require('../models/article');
-const messages = require('../config/messages');
+const RESPONSE_MSG = require('../config/constants');
 const NotFoundError = require('../errors/NotFoundError');
 const UnauthorizedError = require('../errors/UnauthorizedError');
 
@@ -40,13 +40,13 @@ function createArticle(req, res, next) {
 function deleteArticle(req, res, next) {
   return Article.findById({ _id: req.params.articleId }).select('+owner')
     .then((article) => {
-      if (!article) throw new NotFoundError(messages.notFoundArticle);
+      if (!article) throw new NotFoundError(RESPONSE_MSG.notFoundArticle);
       else if (!article.owner.equals(req.user._id)) {
-        throw new UnauthorizedError(messages.authDeleteArticle);
+        throw new UnauthorizedError(RESPONSE_MSG.authDeleteArticle);
       } else {
         Article.findByIdAndDelete({ _id: req.params.articleId })
           .then(() => {
-            res.status(200).send({ message: messages.articleDeleted });
+            res.status(200).send({ message: RESPONSE_MSG.articleDeleted });
           })
           .catch(next);
       }

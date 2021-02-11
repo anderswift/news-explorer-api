@@ -7,8 +7,8 @@ const { errors } = require('celebrate');
 
 const { requestLogger, errorLogger } = require('./middleware/logger');
 
-const { PORT, DATABASE } = require('./config/environment');
-const { limiter } = require('./config/limiter');
+const { PORT, DATABASE } = require('./config/constants');
+const { limiter } = require('./middleware/limiter');
 
 const routes = require('./routes/index');
 
