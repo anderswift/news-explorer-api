@@ -39,7 +39,7 @@ function createUser(req, res, next) {
       name,
     }))
     .then((user) => {
-      res.status(201).send({ _id: user._id, email: user.email });
+      res.status(201).send({ _id: user._id, email: user.email, name: user.name });
     })
     .catch(next);
 }

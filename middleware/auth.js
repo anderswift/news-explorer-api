@@ -9,16 +9,16 @@ module.exports = (req, res, next) => {
 
   if (!authorization || !authorization.startsWith('Bearer ')) {
     next(new UnauthorizedError('Authorization required'));
-  }
+  } else {
+    const token = authorization.replace('Bearer ', '');
+    let payload;
+    try {
+      payload = jwt.verify(token, JWT_SECRET);
+    } catch (err) {
+      next(new UnauthorizedError('Authorization required'));
+    }
+    req.user = payload;
 
-  const token = authorization.replace('Bearer ', '');
-  let payload;
-  try {
-    payload = jwt.verify(token, JWT_SECRET);
-  } catch (err) {
-    next(new UnauthorizedError('Authorization required'));
+    next();
   }
-  req.user = payload;
-
-  next();
 };
