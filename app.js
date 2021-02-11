@@ -10,14 +10,10 @@ const rateLimit = require('express-rate-limit');
 const { errors } = require('celebrate');
 
 const { requestLogger, errorLogger } = require('./middleware/logger');
-const auth = require('./middleware/auth');
 
-const accountRoutes = require('./routes/account');
-const userRoutes = require('./routes/users');
-const articleRoutes = require('./routes/articles');
+const routes = require('./routes/index');
 
 const errorHandler = require('./errors/errorHandler');
-const NotFoundError = require('./errors/NotFoundError');
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
@@ -50,14 +46,7 @@ app.get('/crash-test', () => {
   }, 0);
 });
 
-app.use('/', accountRoutes);
-
-app.use(auth);
-
-app.use('/', userRoutes);
-app.use('/', articleRoutes);
-
-app.use('*', (req, res, next) => { next(new NotFoundError('Requested resource not found')); });
+app.use('/', routes);
 
 app.use(errorLogger);
 
