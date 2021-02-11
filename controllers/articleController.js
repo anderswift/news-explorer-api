@@ -1,7 +1,7 @@
 const Article = require('../models/article');
 const RESPONSE_MSG = require('../config/constants');
 const NotFoundError = require('../errors/NotFoundError');
-const UnauthorizedError = require('../errors/UnauthorizedError');
+const ForbiddenError = require('../errors/ForbiddenError');
 
 function getArticles(req, res, next) {
   return Article.find({ owner: req.user._id }).sort({ date: -1 })
@@ -42,7 +42,7 @@ function deleteArticle(req, res, next) {
     .then((article) => {
       if (!article) throw new NotFoundError(RESPONSE_MSG.notFoundArticle);
       else if (!article.owner.equals(req.user._id)) {
-        throw new UnauthorizedError(RESPONSE_MSG.authDeleteArticle);
+        throw new ForbiddenError(RESPONSE_MSG.authDeleteArticle);
       } else {
         Article.findByIdAndDelete({ _id: req.params.articleId })
           .then(() => {
