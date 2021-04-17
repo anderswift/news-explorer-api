@@ -15,11 +15,11 @@ router.post('/articles', celebrate({
   body: Joi.object().keys({
     keyword: Joi.string().required(),
     title: Joi.string().required(),
-    text: Joi.string().required(),
-    date: Joi.string().required(),
+    description: Joi.string().required(),
+    publishedAt: Joi.string().required(),
     source: Joi.string().required(),
-    link: Joi.string().uri({ scheme: ['http', 'https'] }).required(),
-    image: Joi.string().uri({ scheme: ['http', 'https'] }).required(),
+    url: Joi.string().uri({ scheme: ['http', 'https'] }).required(),
+    urlToImage: Joi.string().uri({ scheme: ['http', 'https'] }).required(),
   }),
 }), createArticle);
 
