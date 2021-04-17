@@ -4,7 +4,7 @@ const NotFoundError = require('../errors/NotFoundError');
 const ForbiddenError = require('../errors/ForbiddenError');
 
 function getArticles(req, res, next) {
-  return Article.find({ owner: req.user._id }).sort({ date: -1 })
+  return Article.find({ owner: req.user._id }).sort({ _id: -1 })
     .then((articles) => {
       res.status(200).send(articles);
     })
@@ -15,20 +15,20 @@ function createArticle(req, res, next) {
   const {
     keyword,
     title,
-    text,
-    date,
+    description,
+    publishedAt,
     source,
-    link,
-    image,
+    url,
+    urlToImage,
   } = req.body;
   return Article.create({
     keyword,
     title,
-    text,
-    date,
+    description,
+    publishedAt,
     source,
-    link,
-    image,
+    url,
+    urlToImage,
     owner: req.user._id,
   })
     .then((article) => {
