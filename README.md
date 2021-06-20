@@ -1,5 +1,5 @@
 # News Explorer Back End API
-Access online at [https://api.newsexplorer.anderswift.com](https://api.newsexplorer.anderswift.com)
+Access full site online at https://newsexplorer.anderswift.com, API at https://api.newsexplorer.anderswift.com
 
 ### Project Description:
 An API for the backend functionality of the News Explorer project from the Practicum Web Development course. The application is built with Node.js, using Express and MongoDB. This project incorporates:
